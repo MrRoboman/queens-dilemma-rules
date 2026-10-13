@@ -18,6 +18,8 @@ Supporting material:
   - Rulebook: link the page in the viewer, e.g. *([p. 24](https://mrroboman.github.io/queens-dilemma-rules/?page=24), "Voting Phase")*, so players can cross-check in one tap.
   - Campaign content: name the component and its code, e.g. *(Chronicle card C012)*.
   - House rulings: give the number, e.g. *(House ruling H3)*.
+- **Specific beats general:** within each source, specific rules and exceptions override general rules. When several rules apply, reconcile them before deciding they conflict.
+- Answer from these sources, not from general knowledge of the game or of The King's Dilemma.
 - If the rules are **silent or ambiguous**, say so plainly. Then give the most reasonable reading, labeled as an interpretation, and suggest the group agree on a house ruling.
 - If the answer depends on a card that isn't in `spoilers/CAMPAIGN_RULES.md`, ask for its text.
 - **Spoilers:** Everything in `spoilers/` has already been revealed to the group, so use it freely. Never speculate about content that hasn't been revealed, such as unopened Envelopes or Mystery boxes, other players' Agenda cards or the backs of Dilemma cards.
