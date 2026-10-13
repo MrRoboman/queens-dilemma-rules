@@ -18,4 +18,5 @@ This repo exists to answer rules questions and settle disputes for the board gam
 ## Maintenance
 - If you find an error or gap in `RULES.md`, fix it and cite the page.
 - Keep `CLAUDE.md` and `AGENTS.md` in sync; they hold the same instructions.
+- The starter prompt in `README.md` restates the answering rules for other AI chats. Update it when they change.
 - If the rulebook PDF is replaced, run `scripts/render-pages.sh` to regenerate the viewer's page images.
