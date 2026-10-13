@@ -41,5 +41,5 @@ When a user shares photos or text of newly revealed components to record:
 - Before committing, pull the latest `main`; other sessions may have pushed changes.
 - If you find an error or gap in `RULES.md`, fix it and cite the page. Keep `RULES.md` limited to the core rulebook; campaign content goes in `spoilers/`.
 - Keep `CLAUDE.md` and `AGENTS.md` in sync; they hold the same instructions.
-- The starter prompt in `README.md` restates the answering rules for other AI chats. Update it when they change.
+- The starter prompt in `README.md` and the custom GPT instructions in `docs/custom-gpt.md` restate the answering rules for other AI chats. Update both when the rules change.
 - If the rulebook PDF is replaced, run `scripts/render-pages.sh` to regenerate the viewer's page images and search text.

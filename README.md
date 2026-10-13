@@ -36,6 +36,8 @@ Confirm in one line once you've read the files.
 
 If your assistant can't open web links, download the three files and attach them to the chat along with the prompt.
 
+To skip the pasting, a ChatGPT user can set up a shareable custom GPT with these instructions built in. See [`docs/custom-gpt.md`](docs/custom-gpt.md).
+
 ## Use a coding agent
 
 Clone this repository and open it in your agent (Claude Code, Codex, Cursor, etc.):
