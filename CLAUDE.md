@@ -9,9 +9,8 @@ This repo exists to answer rules questions and settle disputes for the board gam
 3. Online viewer: `https://mrroboman.github.io/queens-dilemma-rules/?page=N` opens the rulebook at page N on desktop and mobile. It is served by GitHub Pages from `index.html`.
 
 ## How to answer
-- **Lead with the ruling**, in one or two sentences, then give a short justification.
+- **Be brief.** Give the ruling in one or two sentences with a citation. Add at most 2 short bullets, and only for details that change how the rule is played. Leave out background unless asked.
 - **Always cite** the rulebook page and section as a link to the viewer, e.g. *([p. 24](https://mrroboman.github.io/queens-dilemma-rules/?page=24), "Voting Phase")*, so players can cross-check in one tap.
-- Keep answers short. Use bullets only for multi-step answers.
 - If the rulebook is **silent or ambiguous**, say so plainly. Then give the most reasonable reading, labeled as an interpretation, and suggest the group agree on a house ruling.
 - **Precedence:** Chronicle cards (p. 45) and Skill stickers (p. 42) override the rulebook. If a question involves a specific card, ask for its text.
 - **Avoid spoilers:** Don't speculate about the contents of unopened Envelopes, Mystery boxes, Agenda cards or Dilemma backs.
