@@ -36,6 +36,7 @@ Summary of the **Core Rulebook v15** (`rulebook/QUD_Core_Rulebook_v15.pdf`). Cit
 - No one wins a single game. Each game adds √, ∑ and † toward the campaign winner **[[p. 6](https://mrroboman.github.io/queens-dilemma-rules/?page=6)]**.
 
 ## 2. Before the First Game (one-time setup) [[p. 8](https://mrroboman.github.io/queens-dilemma-rules/?page=8)–14]
+0. **Read the Lore Compendium** ([online](https://horribleguild.com/queens-dilemma-lore), the QR code on [p. 8](https://mrroboman.github.io/queens-dilemma-rules/?page=8)). The section on the twelve Regions is optional.
 1. **Choose Characters** **[[p. 8](https://mrroboman.github.io/queens-dilemma-rules/?page=8)–10]**. Each Character's Ideologies:
    - Aesyas: Progress / Diplomacy
    - Elinor: Tradition / Order
@@ -126,7 +127,7 @@ A game lasts about 7–9 rounds, each built around one Dilemma card. Each round 
 5. Check whether the end of the game is triggered
 
 ### 4.1 Read the Dilemma [[p. 22](https://mrroboman.github.io/queens-dilemma-rules/?page=22)]
-- Draw from the **bottom** of the deck, face up. If the deck is empty, see the Troubleshooting Tool **[[p. 49](https://mrroboman.github.io/queens-dilemma-rules/?page=49)]**.
+- Draw from the **bottom** of the deck, face up. If the deck is empty, use the official [Troubleshooting Tool](https://horribleguild.com/qdtool/) (the QR code on [p. 49](https://mrroboman.github.io/queens-dilemma-rules/?page=49)). An empty deck usually means an Envelope was missed.
 - Anyone may read the card aloud. Announce all highlighted **Keywords**.
 - Declare the outcomes printed on the front: the Ideology shifts and the ≥/≤/ˆ Legacy hints.
 - Hidden consequences are possible, so read the whole text **[[p. 23](https://mrroboman.github.io/queens-dilemma-rules/?page=23), "Unexpected Consequences"]**.
@@ -191,7 +192,8 @@ Do these steps in order:
   4. Put the Story card on top of its Storyline stack.
   5. Shuffle the 3 Dilemma cards into the deck.
   - A Story card with a gold symbol on black ends its Storyline. The Leader attaches the Ending sticker it names **[[p. 47](https://mrroboman.github.io/queens-dilemma-rules/?page=47)]**.
-  - **Forgetting an Envelope can stall the campaign.**
+  - Open only the Envelopes shown in the **winning** outcome; the losing outcome is ignored.
+  - **Forgetting an Envelope can stall the campaign.** If that happens, use the [Troubleshooting Tool](https://horribleguild.com/qdtool/) **[[p. 30](https://mrroboman.github.io/queens-dilemma-rules/?page=30), [p. 49](https://mrroboman.github.io/queens-dilemma-rules/?page=49)]**. Opened Envelopes go back into the Legacy tray empty, which shows which ones have been opened.
 - **e. Mystery box (˘MXX)** **[[p. 31](https://mrroboman.github.io/queens-dilemma-rules/?page=31)]**: Open it and immediately follow the WARNING! box at the top of its rules sheet. Add its Dilemma cards to the deck right away.
 - **f. New round** **[[p. 31](https://mrroboman.github.io/queens-dilemma-rules/?page=31)]**:
   - Put the Dilemma card halfway under the lowest free Round Counter slot, back side up, so the outcome stays visible.
@@ -383,4 +385,6 @@ Resolve active Events in ascending card-number order. Skip this phase if there a
 | The Slider is at the exact center? | Neither Ideology is winning. | [p. 33](https://mrroboman.github.io/queens-dilemma-rules/?page=33) |
 | How are ties in Power scoring handled? | All tied players get the bonus. | [p. 34](https://mrroboman.github.io/queens-dilemma-rules/?page=34) |
 | Can the same Chronicle Pass Action be used twice in one Vote? | No, one player per Voting Phase. | [p. 25](https://mrroboman.github.io/queens-dilemma-rules/?page=25) |
+| Do we open the Envelope shown on the losing outcome? | No, only the winning outcome's Envelopes and Mystery boxes are opened. | [p. 29](https://mrroboman.github.io/queens-dilemma-rules/?page=29)–31 |
+| We forgot to open Envelopes or the deck ran out? | Use the official [Troubleshooting Tool](https://horribleguild.com/qdtool/) (QR code on p. 49). | [p. 30](https://mrroboman.github.io/queens-dilemma-rules/?page=30), 49 |
 | Card vs rulebook conflict? | Chronicle cards and Skills win. | [p. 42](https://mrroboman.github.io/queens-dilemma-rules/?page=42), 45 |
