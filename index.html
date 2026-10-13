@@ -1,0 +1,98 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Queen's Dilemma Rulebook</title>
+<style>
+  :root { --bg: #f4f1ea; --bar: #2b2420; --fg: #f4f1ea; --accent: #c9a24a; }
+  @media (prefers-color-scheme: dark) { :root { --bg: #1a1714; } }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--bg); font: 16px/1.4 system-ui, sans-serif; }
+  header { position: sticky; top: 0; z-index: 1; display: flex; gap: 8px; align-items: center;
+           justify-content: center; flex-wrap: wrap; padding: 8px 16px; background: var(--bar); color: var(--fg); }
+  header strong { margin-right: auto; font-weight: 600; }
+  button, input { font: inherit; border-radius: 6px; border: 1px solid #6b5d50; background: #3a312b; color: var(--fg); }
+  button { padding: 6px 12px; cursor: pointer; }
+  button:disabled { opacity: .4; cursor: default; }
+  input { width: 4em; padding: 5px; text-align: center; }
+  a { color: var(--accent); }
+  #wrap { display: flex; justify-content: center; padding: 16px; }
+  canvas { max-width: 100%; height: auto; box-shadow: 0 2px 12px rgba(0,0,0,.35); background: #fff; }
+  #msg { text-align: center; padding: 32px 16px; color: #8a7d70; }
+</style>
+</head>
+<body>
+<header>
+  <strong>Queen's Dilemma Rulebook</strong>
+  <button id="prev" aria-label="Previous page">‹</button>
+  <label>Page <input id="num" type="number" min="1" inputmode="numeric"> / <span id="count">?</span></label>
+  <button id="next" aria-label="Next page">›</button>
+  <a id="dl" href="rulebook/QUD_Core_Rulebook_v15.pdf">PDF</a>
+</header>
+<div id="msg">Loading rulebook…</div>
+<div id="wrap"><canvas id="cv"></canvas></div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+<script>
+  pdfjsLib.GlobalWorkerOptions.workerSrc =
+    "https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js";
+
+  const PDF_URL = "rulebook/QUD_Core_Rulebook_v15.pdf";
+  const $ = id => document.getElementById(id);
+  let doc = null, page = 1, rendering = null;
+
+  function requestedPage() {
+    const q = new URLSearchParams(location.search).get("page")
+           || (location.hash.match(/page=(\d+)/) || [])[1];
+    return Math.max(1, parseInt(q, 10) || 1);
+  }
+
+  async function render(n) {
+    n = Math.min(Math.max(1, n), doc.numPages);
+    page = n;
+    $("num").value = n;
+    $("prev").disabled = n <= 1;
+    $("next").disabled = n >= doc.numPages;
+    $("dl").href = PDF_URL + "#page=" + n;
+    const url = new URL(location.href);
+    url.searchParams.set("page", n);
+    url.hash = "";
+    history.replaceState(null, "", url);
+
+    const p = await doc.getPage(n);
+    const cssWidth = Math.min(document.documentElement.clientWidth - 32, 1100);
+    const base = p.getViewport({ scale: 1 });
+    const scale = cssWidth / base.width;
+    const dpr = window.devicePixelRatio || 1;
+    const vp = p.getViewport({ scale: scale * dpr });
+    const cv = $("cv");
+    cv.width = vp.width; cv.height = vp.height;
+    cv.style.width = (vp.width / dpr) + "px";
+    if (rendering) rendering.cancel();
+    rendering = p.render({ canvasContext: cv.getContext("2d"), viewport: vp });
+    try { await rendering.promise; } catch (e) { /* cancelled */ }
+    $("msg").hidden = true;
+    window.scrollTo(0, 0);
+  }
+
+  $("prev").onclick = () => render(page - 1);
+  $("next").onclick = () => render(page + 1);
+  $("num").onchange = e => render(parseInt(e.target.value, 10) || 1);
+  document.addEventListener("keydown", e => {
+    if (e.target.tagName === "INPUT") return;
+    if (e.key === "ArrowLeft") render(page - 1);
+    if (e.key === "ArrowRight") render(page + 1);
+  });
+  let resizeTimer;
+  window.addEventListener("resize", () => {
+    clearTimeout(resizeTimer);
+    resizeTimer = setTimeout(() => doc && render(page), 200);
+  });
+
+  pdfjsLib.getDocument({ url: PDF_URL, disableAutoFetch: true, disableStream: true }).promise
+    .then(d => { doc = d; $("count").textContent = d.numPages; return render(requestedPage()); })
+    .catch(err => { $("msg").textContent = "Could not load the rulebook: " + err.message; });
+</script>
+</body>
+</html>
