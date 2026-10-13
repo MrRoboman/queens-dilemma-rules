@@ -5,94 +5,81 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Queen's Dilemma Rulebook</title>
 <style>
-  :root { --bg: #f4f1ea; --bar: #2b2420; --fg: #f4f1ea; --accent: #c9a24a; }
+  :root { --bg: #f4f1ea; --bar: #2b2420; --fg: #f4f1ea; --accent: #c9a24a; --muted: #8a7d70; }
   @media (prefers-color-scheme: dark) { :root { --bg: #1a1714; } }
   * { box-sizing: border-box; }
   body { margin: 0; background: var(--bg); font: 16px/1.4 system-ui, sans-serif; }
   header { position: sticky; top: 0; z-index: 1; display: flex; gap: 8px; align-items: center;
            justify-content: center; flex-wrap: wrap; padding: 8px 16px; background: var(--bar); color: var(--fg); }
   header strong { margin-right: auto; font-weight: 600; }
+  @media (max-width: 560px) { header strong { flex-basis: 100%; margin: 0; text-align: center; } }
   button, input { font: inherit; border-radius: 6px; border: 1px solid #6b5d50; background: #3a312b; color: var(--fg); }
   button { padding: 6px 12px; cursor: pointer; }
   button:disabled { opacity: .4; cursor: default; }
   input { width: 4em; padding: 5px; text-align: center; }
   a { color: var(--accent); }
-  #wrap { display: flex; justify-content: center; padding: 16px; }
-  canvas { max-width: 100%; height: auto; box-shadow: 0 2px 12px rgba(0,0,0,.35); background: #fff; }
-  #msg { text-align: center; padding: 32px 16px; color: #8a7d70; }
+  main { display: flex; justify-content: center; padding: 16px; }
+  #pg { width: 100%; max-width: 1100px; height: auto; aspect-ratio: 1 / 1;
+        box-shadow: 0 2px 12px rgba(0,0,0,.35); background: #fff; }
+  #msg { text-align: center; padding: 32px 16px; color: var(--muted); }
 </style>
 </head>
 <body>
 <header>
   <strong>Queen's Dilemma Rulebook</strong>
   <button id="prev" aria-label="Previous page">‹</button>
-  <label>Page <input id="num" type="number" min="1" inputmode="numeric"> / <span id="count">?</span></label>
+  <label>Page <input id="num" type="number" min="1" inputmode="numeric"> / <span id="count"></span></label>
   <button id="next" aria-label="Next page">›</button>
   <a id="dl" href="rulebook/QUD_Core_Rulebook_v15.pdf">PDF</a>
 </header>
-<div id="msg">Loading rulebook…</div>
-<div id="wrap"><canvas id="cv"></canvas></div>
+<main><img id="pg" alt=""></main>
+<div id="msg" hidden></div>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
 <script>
-  pdfjsLib.GlobalWorkerOptions.workerSrc =
-    "https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js";
-
+  // Pages are pre-rendered by scripts/render-pages.sh into rulebook/pages/N.jpg.
+  const PAGE_COUNT = 52;
   const PDF_URL = "rulebook/QUD_Core_Rulebook_v15.pdf";
   const $ = id => document.getElementById(id);
-  let doc = null, page = 1, rendering = null;
+  const src = n => "rulebook/pages/" + n + ".jpg";
+  let page = 1;
 
   function requestedPage() {
     const q = new URLSearchParams(location.search).get("page")
            || (location.hash.match(/page=(\d+)/) || [])[1];
-    return Math.max(1, parseInt(q, 10) || 1);
+    return parseInt(q, 10) || 1;
   }
 
-  async function render(n) {
-    n = Math.min(Math.max(1, n), doc.numPages);
+  function show(n) {
+    n = Math.min(Math.max(1, n), PAGE_COUNT);
     page = n;
     $("num").value = n;
     $("prev").disabled = n <= 1;
-    $("next").disabled = n >= doc.numPages;
+    $("next").disabled = n >= PAGE_COUNT;
     $("dl").href = PDF_URL + "#page=" + n;
+    $("pg").src = src(n);
+    $("pg").alt = "Rulebook page " + n;
+    $("msg").hidden = true;
     const url = new URL(location.href);
     url.searchParams.set("page", n);
     url.hash = "";
     history.replaceState(null, "", url);
-
-    const p = await doc.getPage(n);
-    const cssWidth = Math.min(document.documentElement.clientWidth - 32, 1100);
-    const base = p.getViewport({ scale: 1 });
-    const scale = cssWidth / base.width;
-    const dpr = window.devicePixelRatio || 1;
-    const vp = p.getViewport({ scale: scale * dpr });
-    const cv = $("cv");
-    cv.width = vp.width; cv.height = vp.height;
-    cv.style.width = (vp.width / dpr) + "px";
-    if (rendering) rendering.cancel();
-    rendering = p.render({ canvasContext: cv.getContext("2d"), viewport: vp });
-    try { await rendering.promise; } catch (e) { /* cancelled */ }
-    $("msg").hidden = true;
     window.scrollTo(0, 0);
+    // Warm the cache for the neighbouring pages so flipping is instant.
+    [n - 1, n + 1].forEach(m => { if (m >= 1 && m <= PAGE_COUNT) new Image().src = src(m); });
   }
 
-  $("prev").onclick = () => render(page - 1);
-  $("next").onclick = () => render(page + 1);
-  $("num").onchange = e => render(parseInt(e.target.value, 10) || 1);
+  $("pg").onerror = () => { $("msg").textContent = "Could not load page " + page + "."; $("msg").hidden = false; };
+  $("prev").onclick = () => show(page - 1);
+  $("next").onclick = () => show(page + 1);
+  $("num").onchange = e => show(parseInt(e.target.value, 10) || 1);
   document.addEventListener("keydown", e => {
     if (e.target.tagName === "INPUT") return;
-    if (e.key === "ArrowLeft") render(page - 1);
-    if (e.key === "ArrowRight") render(page + 1);
-  });
-  let resizeTimer;
-  window.addEventListener("resize", () => {
-    clearTimeout(resizeTimer);
-    resizeTimer = setTimeout(() => doc && render(page), 200);
+    if (e.key === "ArrowLeft") show(page - 1);
+    if (e.key === "ArrowRight") show(page + 1);
   });
 
-  pdfjsLib.getDocument({ url: PDF_URL, disableAutoFetch: true, disableStream: true }).promise
-    .then(d => { doc = d; $("count").textContent = d.numPages; return render(requestedPage()); })
-    .catch(err => { $("msg").textContent = "Could not load the rulebook: " + err.message; });
+  $("count").textContent = PAGE_COUNT;
+  show(requestedPage());
 </script>
 </body>
 </html>

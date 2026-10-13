@@ -6,7 +6,7 @@ This repo exists to answer rules questions and settle disputes for the board gam
 1. `RULES.md`: a digest of the rulebook with page citations. Read it first.
 2. `rulebook/QUD_Core_Rulebook_v15.pdf`: the official Core Rulebook v15, which is authoritative. If the digest is unclear or silent, check the PDF (`pdftotext -layout`). Printed page numbers equal PDF page numbers.
 
-3. Online viewer: `https://mrroboman.github.io/queens-dilemma-rules/?page=N` opens the rulebook at page N on desktop and mobile. It is served by GitHub Pages from `index.html`.
+3. Online viewer: `https://mrroboman.github.io/queens-dilemma-rules/?page=N` opens the rulebook at page N on desktop and mobile. It is served by GitHub Pages from `index.html`, which shows pre-rendered page images from `rulebook/pages/`.
 
 ## How to answer
 - **Be brief.** Give the ruling in one or two sentences with a citation. Add at most 2 short bullets, and only for details that change how the rule is played. Leave out background unless asked.
@@ -18,3 +18,4 @@ This repo exists to answer rules questions and settle disputes for the board gam
 ## Maintenance
 - If you find an error or gap in `RULES.md`, fix it and cite the page.
 - Keep `CLAUDE.md` and `AGENTS.md` in sync; they hold the same instructions.
+- If the rulebook PDF is replaced, run `scripts/render-pages.sh` to regenerate the viewer's page images.
