@@ -5,43 +5,86 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Queen's Dilemma Rulebook</title>
 <style>
-  :root { --bg: #f4f1ea; --bar: #2b2420; --fg: #f4f1ea; --accent: #c9a24a; --muted: #8a7d70; }
-  @media (prefers-color-scheme: dark) { :root { --bg: #1a1714; } }
+  :root { --bg: #f4f1ea; --bar: #2b2420; --fg: #f4f1ea; --accent: #c9a24a; --muted: #8a7d70;
+          --panel: #fffdf8; --text: #2b2420; --line: #e2dccf; --mark: #f3dd9c; }
+  @media (prefers-color-scheme: dark) {
+    :root { --bg: #1a1714; --panel: #262019; --text: #efe8dc; --line: #3d342b; --mark: #6b5418; }
+  }
   * { box-sizing: border-box; }
-  body { margin: 0; background: var(--bg); font: 16px/1.4 system-ui, sans-serif; }
-  header { position: sticky; top: 0; z-index: 1; display: flex; gap: 8px; align-items: center;
+  body { margin: 0; background: var(--bg); color: var(--text); font: 16px/1.4 system-ui, sans-serif; }
+  header { position: sticky; top: 0; z-index: 2; display: flex; gap: 8px; align-items: center;
            justify-content: center; flex-wrap: wrap; padding: 8px 16px; background: var(--bar); color: var(--fg); }
   header strong { margin-right: auto; font-weight: 600; }
-  @media (max-width: 560px) { header strong { flex-basis: 100%; margin: 0; text-align: center; } }
+  .controls { display: flex; gap: 6px; align-items: center; }
   button, input { font: inherit; border-radius: 6px; border: 1px solid #6b5d50; background: #3a312b; color: var(--fg); }
   button { padding: 6px 12px; cursor: pointer; }
   button:disabled { opacity: .4; cursor: default; }
-  input { width: 4em; padding: 5px; text-align: center; }
+  button[aria-pressed="true"] { background: var(--accent); border-color: var(--accent); color: var(--bar); }
+  #num { width: 3.4em; padding: 5px; text-align: center; }
   a { color: var(--accent); }
-  main { display: flex; justify-content: center; padding: 16px; }
-  #pg { width: 100%; max-width: 1100px; height: auto; aspect-ratio: 1 / 1;
-        box-shadow: 0 2px 12px rgba(0,0,0,.35); background: #fff; }
+  .sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
+  @media (max-width: 560px) {
+    header strong { flex-basis: 100%; margin: 0; text-align: center; }
+    button { padding: 6px 9px; }
+  }
+
+  #search { position: sticky; top: var(--header-h, 52px); z-index: 1; background: var(--panel);
+            border-bottom: 1px solid var(--line); padding: 12px 16px; box-shadow: 0 4px 12px rgba(0,0,0,.15); }
+  #search[hidden] { display: none; }
+  #q { width: 100%; max-width: 640px; display: block; margin: 0 auto; padding: 8px 10px;
+       background: var(--bg); color: var(--text); border-color: var(--line); }
+  #results { max-width: 640px; margin: 8px auto 0; max-height: 55vh; overflow-y: auto; }
+  #results p { margin: 8px 0; color: var(--muted); font-size: 14px; }
+  .hit { display: block; width: 100%; text-align: left; margin: 0; padding: 8px 4px; border: 0;
+         border-bottom: 1px solid var(--line); border-radius: 0; background: none; color: var(--text); font-size: 14px; }
+  .hit b { color: var(--accent); margin-right: 6px; }
+  mark { background: var(--mark); color: inherit; border-radius: 2px; }
+
+  main { display: flex; justify-content: center; padding: 16px; touch-action: manipulation; }
+  #frame { width: 100%; max-width: 1100px; overflow: hidden; box-shadow: 0 2px 12px rgba(0,0,0,.35); background: #fff; }
+  #pg { display: block; width: 100%; height: auto; aspect-ratio: 1 / 1; transition: transform .25s ease;
+        user-select: none; -webkit-user-select: none; -webkit-touch-callout: none; }
+  body.zoomed main { padding: 8px 0; }
+  body.zoomed #pg { width: 200%; }
+  body.zoomed.col1 #pg { transform: translateX(-50%); }
   #msg { text-align: center; padding: 32px 16px; color: var(--muted); }
+  #hint { text-align: center; color: var(--muted); font-size: 13px; padding: 0 16px 16px; }
 </style>
 </head>
 <body>
 <header>
   <strong>Queen's Dilemma Rulebook</strong>
-  <button id="prev" aria-label="Previous page">‹</button>
-  <label>Page <input id="num" type="number" min="1" inputmode="numeric"> / <span id="count"></span></label>
-  <button id="next" aria-label="Next page">›</button>
-  <a id="dl" href="rulebook/QUD_Core_Rulebook_v15.pdf">PDF</a>
+  <div class="controls">
+    <button id="prev" aria-label="Previous">‹</button>
+    <label><span class="sr">Page</span><input id="num" type="number" min="1" inputmode="numeric"></label>
+    <span>/ <span id="count"></span></span>
+    <button id="next" aria-label="Next">›</button>
+    <button id="zoom" aria-pressed="false" title="Zoom into one column (or double-tap the page)">Zoom</button>
+    <button id="find" aria-pressed="false" aria-controls="search">Search</button>
+    <a id="dl" href="rulebook/QUD_Core_Rulebook_v15.pdf">PDF</a>
+  </div>
 </header>
-<main><img id="pg" alt=""></main>
+<div id="search" hidden>
+  <input id="q" type="search" placeholder="Search the rulebook, e.g. moderator tie" autocomplete="off" aria-label="Search the rulebook">
+  <div id="results" aria-live="polite"></div>
+</div>
+<main><div id="frame"><img id="pg" alt=""></div></main>
 <div id="msg" hidden></div>
+<div id="hint">Swipe or use ‹ › to turn pages. Double-tap the page or press Zoom to read one column at a time.</div>
 
 <script>
-  // Pages are pre-rendered by scripts/render-pages.sh into rulebook/pages/N.jpg.
+  // Pages are pre-rendered by scripts/render-pages.sh into rulebook/pages/N.jpg,
+  // and the search text comes from rulebook/search.json (same script).
   const PAGE_COUNT = 52;
   const PDF_URL = "rulebook/QUD_Core_Rulebook_v15.pdf";
   const $ = id => document.getElementById(id);
   const src = n => "rulebook/pages/" + n + ".jpg";
-  let page = 1;
+  let page = 1, col = 0, zoomed = false;
+
+  const store = {
+    get(k) { try { return localStorage.getItem(k); } catch (e) { return null; } },
+    set(k, v) { try { localStorage.setItem(k, v); } catch (e) {} }
+  };
 
   function requestedPage() {
     const q = new URLSearchParams(location.search).get("page")
@@ -49,36 +92,155 @@
     return parseInt(q, 10) || 1;
   }
 
-  function show(n) {
+  // ---- Page display ----
+  function show(n, c = 0) {
     n = Math.min(Math.max(1, n), PAGE_COUNT);
-    page = n;
+    const changed = n !== page || !$("pg").src;
+    page = n; col = c;
+    document.body.classList.toggle("col1", col === 1);
     $("num").value = n;
-    $("prev").disabled = n <= 1;
-    $("next").disabled = n >= PAGE_COUNT;
+    $("prev").disabled = n <= 1 && (!zoomed || col === 0);
+    $("next").disabled = n >= PAGE_COUNT && (!zoomed || col === 1);
     $("dl").href = PDF_URL + "#page=" + n;
-    $("pg").src = src(n);
-    $("pg").alt = "Rulebook page " + n;
-    $("msg").hidden = true;
-    const url = new URL(location.href);
-    url.searchParams.set("page", n);
-    url.hash = "";
-    history.replaceState(null, "", url);
+    if (changed) {
+      $("pg").src = src(n);
+      $("pg").alt = "Rulebook page " + n;
+      $("msg").hidden = true;
+      const url = new URL(location.href);
+      url.searchParams.set("page", n);
+      url.hash = "";
+      history.replaceState(null, "", url);
+      // Warm the cache for the neighbouring pages so flipping is instant.
+      [n - 1, n + 1].forEach(m => { if (m >= 1 && m <= PAGE_COUNT) new Image().src = src(m); });
+    }
     window.scrollTo(0, 0);
-    // Warm the cache for the neighbouring pages so flipping is instant.
-    [n - 1, n + 1].forEach(m => { if (m >= 1 && m <= PAGE_COUNT) new Image().src = src(m); });
   }
 
+  // Next/previous: when zoomed, step through the left column, then the right, then the next page.
+  function step(dir) {
+    if (!zoomed) return show(page + dir);
+    if (dir > 0) col === 0 ? show(page, 1) : page < PAGE_COUNT && show(page + 1, 0);
+    else col === 1 ? show(page, 0) : page > 1 && show(page - 1, 1);
+  }
+
+  function setZoom(on, c = 0) {
+    zoomed = on;
+    document.body.classList.toggle("zoomed", on);
+    $("zoom").setAttribute("aria-pressed", on);
+    store.set("qd-zoom", on ? "1" : "0");
+    show(page, on ? c : 0);
+  }
+
+  // Which column a point on the page falls in.
+  const colAt = x => { const r = $("frame").getBoundingClientRect(); return x > r.left + r.width / 2 ? 1 : 0; };
+
   $("pg").onerror = () => { $("msg").textContent = "Could not load page " + page + "."; $("msg").hidden = false; };
-  $("prev").onclick = () => show(page - 1);
-  $("next").onclick = () => show(page + 1);
+  $("prev").onclick = () => step(-1);
+  $("next").onclick = () => step(1);
   $("num").onchange = e => show(parseInt(e.target.value, 10) || 1);
+  $("zoom").onclick = () => setZoom(!zoomed);
+  $("frame").addEventListener("dblclick", e => setZoom(!zoomed, colAt(e.clientX)));
+
   document.addEventListener("keydown", e => {
-    if (e.target.tagName === "INPUT") return;
-    if (e.key === "ArrowLeft") show(page - 1);
-    if (e.key === "ArrowRight") show(page + 1);
+    if (e.target.tagName === "INPUT") {
+      if (e.key === "Escape") toggleSearch(false);
+      return;
+    }
+    if (e.key === "ArrowLeft") step(-1);
+    if (e.key === "ArrowRight") step(1);
+    if (e.key === "/") { e.preventDefault(); toggleSearch(true); }
   });
 
+  // ---- Touch: swipe to turn pages, double-tap to zoom ----
+  let touch = null, lastTap = 0;
+  const main = document.querySelector("main");
+  main.addEventListener("touchstart", e => {
+    touch = e.touches.length === 1 ? { x: e.touches[0].clientX, y: e.touches[0].clientY, t: Date.now() } : null;
+  }, { passive: true });
+  main.addEventListener("touchend", e => {
+    if (!touch || e.touches.length) { touch = null; return; }
+    const p = e.changedTouches[0], dx = p.clientX - touch.x, dy = p.clientY - touch.y, dt = Date.now() - touch.t;
+    touch = null;
+    // Leave gestures alone while the browser itself is pinch-zoomed in.
+    if (window.visualViewport && visualViewport.scale > 1.05) return;
+    if (Math.abs(dx) > 50 && Math.abs(dx) > 1.5 * Math.abs(dy) && dt < 700) {
+      step(dx < 0 ? 1 : -1);
+    } else if (Math.abs(dx) < 10 && Math.abs(dy) < 10 && dt < 300) {
+      const now = Date.now();
+      if (now - lastTap < 300) { e.preventDefault(); setZoom(!zoomed, colAt(p.clientX)); lastTap = 0; }
+      else lastTap = now;
+    }
+  });
+
+  // ---- Search ----
+  let pagesText = null, normText = null, searchTimer;
+  const fold = s => s.split("").map(ch => {
+    const d = ch.normalize("NFD")[0], l = d.toLowerCase();
+    return l.length === 1 ? l : d;
+  }).join("").replace(/[’‘]/g, "'");
+  const esc = s => s.replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" })[c]);
+
+  function toggleSearch(open) {
+    $("search").hidden = !open;
+    $("find").setAttribute("aria-pressed", open);
+    document.documentElement.style.setProperty("--header-h", document.querySelector("header").offsetHeight + "px");
+    if (!open) return;
+    $("q").focus();
+    if (!pagesText) {
+      $("results").innerHTML = "<p>Loading…</p>";
+      fetch("rulebook/search.json").then(r => r.json()).then(d => {
+        pagesText = d; normText = d.map(fold); runSearch();
+      }).catch(() => { $("results").innerHTML = "<p>Could not load the search index.</p>"; });
+    }
+  }
+
+  function runSearch() {
+    if (!pagesText) return;
+    const raw = $("q").value.trim();
+    if (!raw) { $("results").innerHTML = "<p>Type a word or phrase, e.g. <i>moderator</i> or <i>gather power</i>.</p>"; return; }
+    const phrase = fold(raw), terms = phrase.split(/\s+/).filter(Boolean);
+    const hits = [];
+    normText.forEach((t, i) => {
+      if (!terms.every(w => t.includes(w))) return;
+      let score = t.includes(phrase) ? 10 : 0;
+      terms.forEach(w => { score += t.split(w).length - 1; });
+      hits.push({ n: i + 1, score, t: pagesText[i], nt: t });
+    });
+    // The rulebook's own index (pages 50-51) matches almost everything, so list it after the content pages.
+    const isIndex = n => n === 50 || n === 51;
+    hits.sort((a, b) => isIndex(a.n) - isIndex(b.n) || b.score - a.score || a.n - b.n);
+    if (!hits.length) { $("results").innerHTML = "<p>No pages match. Try fewer or different words.</p>"; return; }
+    $("results").innerHTML = `<p>${hits.length} page${hits.length > 1 ? "s" : ""}</p>` + hits.slice(0, 40).map(h => {
+      const at = h.nt.includes(phrase) ? h.nt.indexOf(phrase) : h.nt.indexOf(terms[0]);
+      const start = Math.max(0, at - 60), end = Math.min(h.t.length, at + 140);
+      // Highlight every term inside the snippet, working on the folded copy so case and accents don't matter.
+      const nsn = h.nt.slice(start, end), sn = h.t.slice(start, end), marks = [];
+      terms.forEach(w => { let k = nsn.indexOf(w); while (k >= 0) { marks.push([k, k + w.length]); k = nsn.indexOf(w, k + w.length); } });
+      marks.sort((a, b) => a[0] - b[0]);
+      let html = "", pos = 0;
+      marks.forEach(([a, b]) => { if (a < pos) return; html += esc(sn.slice(pos, a)) + "<mark>" + esc(sn.slice(a, b)) + "</mark>"; pos = b; });
+      html += esc(sn.slice(pos));
+      return `<button class="hit" data-n="${h.n}"><b>p. ${h.n}</b>${start > 0 ? "…" : ""}${html}${end < h.t.length ? "…" : ""}</button>`;
+    }).join("");
+  }
+
+  $("find").onclick = () => toggleSearch($("search").hidden);
+  $("q").addEventListener("input", () => { clearTimeout(searchTimer); searchTimer = setTimeout(runSearch, 120); });
+  $("q").addEventListener("keydown", e => {
+    if (e.key === "Enter") { const first = $("results").querySelector(".hit"); if (first) first.click(); }
+  });
+  $("results").addEventListener("click", e => {
+    const hit = e.target.closest(".hit");
+    if (!hit) return;
+    toggleSearch(false);
+    show(+hit.dataset.n, 0);
+  });
+
+  // ---- Start ----
   $("count").textContent = PAGE_COUNT;
+  zoomed = store.get("qd-zoom") === "1";
+  document.body.classList.toggle("zoomed", zoomed);
+  $("zoom").setAttribute("aria-pressed", zoomed);
   show(requestedPage());
 </script>
 </body>

@@ -1,7 +1,9 @@
 #!/usr/bin/env bash
-# Pre-renders every rulebook page to rulebook/pages/N.jpg for the web viewer (index.html).
+# Regenerates the web viewer's assets (index.html) from the rulebook PDF:
+#   rulebook/pages/N.jpg  pre-rendered page images
+#   rulebook/search.json  page text for the search box
 # Re-run this if the rulebook PDF is replaced, then update PAGE_COUNT in index.html if the page count changed.
-# Requires pdftoppm (poppler-utils).
+# Requires pdftoppm and pdftotext (poppler-utils) and python3.
 set -euo pipefail
 cd "$(dirname "$0")/.."
 
@@ -16,3 +18,4 @@ for f in "$OUT"/tmp-*.jpg; do
   mv "$f" "$OUT/$n.jpg"
 done
 echo "Rendered $(ls "$OUT" | wc -l) pages to $OUT ($(du -sh "$OUT" | cut -f1))"
+python3 scripts/build-search-index.py
