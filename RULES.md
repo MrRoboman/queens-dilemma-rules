@@ -6,7 +6,7 @@ Summary of the **Core Rulebook v15** (`rulebook/QUD_Core_Rulebook_v15.pdf`). Cit
 - Skill stickers **[[p. 42](https://mrroboman.github.io/queens-dilemma-rules/?page=42)]**
 - Chronicle cards **[[p. 45](https://mrroboman.github.io/queens-dilemma-rules/?page=45)]**
 
-**Spoilers:** Never read the back of a Dilemma card until its outcome is resolved **[[p. 14](https://mrroboman.github.io/queens-dilemma-rules/?page=14), [p. 21](https://mrroboman.github.io/queens-dilemma-rules/?page=21)]**. Contents of the Legacy tray stay secret until the game tells you to open them. Ideology and Investment cards are public **[[p. 5](https://mrroboman.github.io/queens-dilemma-rules/?page=5)]**.
+**Spoilers:** Never read the back of a Dilemma card until its outcome is resolved **[[p. 14](https://mrroboman.github.io/queens-dilemma-rules/?page=14), [p. 21](https://mrroboman.github.io/queens-dilemma-rules/?page=21)]**. Contents of the Legacy tray stay secret until the game tells you to open them. The Ideology and Investment card decks are public and may be examined **[[p. 5](https://mrroboman.github.io/queens-dilemma-rules/?page=5)]**, but the Ideology card you keep each game is secret **[[p. 18](https://mrroboman.github.io/queens-dilemma-rules/?page=18)]** and Investment cards are drafted secretly **[[p. 20](https://mrroboman.github.io/queens-dilemma-rules/?page=20)]**.
 
 ---
 
@@ -32,7 +32,7 @@ Summary of the **Core Rulebook v15** (`rulebook/QUD_Core_Rulebook_v15.pdf`). Cit
 
 ## 1. Campaign Basics [[p. 1](https://mrroboman.github.io/queens-dilemma-rules/?page=1), 6]
 - This is a legacy campaign of about 14–18 games (30–40 hours). It cannot be reset unless you own the Recharge Pack **[[p. 1](https://mrroboman.github.io/queens-dilemma-rules/?page=1)]**.
-- Best with 5–6 players and the same group throughout. **Players cannot be added to a campaign** **[[p. 6](https://mrroboman.github.io/queens-dilemma-rules/?page=6), [p. 21](https://mrroboman.github.io/queens-dilemma-rules/?page=21)]**.
+- Best with 5–6 players and the same group throughout. **Players can't be added to or removed from a campaign** **[[p. 6](https://mrroboman.github.io/queens-dilemma-rules/?page=6)]**. For players who must stop, see Defections **[[p. 21](https://mrroboman.github.io/queens-dilemma-rules/?page=21)]**.
 - No one wins a single game. Each game adds √, ∑ and † toward the campaign winner **[[p. 6](https://mrroboman.github.io/queens-dilemma-rules/?page=6)]**.
 
 ## 2. Before the First Game (one-time setup) [[p. 8](https://mrroboman.github.io/queens-dilemma-rules/?page=8)–14]
@@ -66,7 +66,7 @@ Summary of the **Core Rulebook v15** (`rulebook/QUD_Core_Rulebook_v15.pdf`). Cit
    - Tip: Main Regions whose base Buildings share a color give swingy income from game to game.
 5. **Region Keyword stickers** go in the Keywords section of your Diary (from Diary p. 4). This includes Vassal Regions **[[p. 13](https://mrroboman.github.io/queens-dilemma-rules/?page=13)]**.
 6. **Read the prologue** "War in Konfurtah" aloud **[[p. 13](https://mrroboman.github.io/queens-dilemma-rules/?page=13)]**.
-7. **Starting Dilemma deck** **[[p. 14](https://mrroboman.github.io/queens-dilemma-rules/?page=14)]**: Open Envelope ˚00. Place its Story card on the matching Story slot. Shuffle its Dilemma cards and cover them with the Cover tile.
+7. **Starting Dilemma deck** **[[p. 14](https://mrroboman.github.io/queens-dilemma-rules/?page=14)]**: Open Envelope ˚00. Read its Story card, then place it on the matching Story slot. Shuffle the remaining Dilemma cards and cover them with the Cover tile.
 8. **Optional Age of Disorder content** **[[p. 14](https://mrroboman.github.io/queens-dilemma-rules/?page=14)]**. This can only be added now, never after the campaign starts:
    - DAOD: 4 Dilemma cards, shuffled into the deck.
    - CAOD: 4 Chronicle cards, which become the starting unlocked Chronicle deck in Save tray slot 3.
@@ -77,7 +77,7 @@ Summary of the **Core Rulebook v15** (`rulebook/QUD_Core_Rulebook_v15.pdf`). Cit
 2. **Timeline** **[[p. 16](https://mrroboman.github.io/queens-dilemma-rules/?page=16)]**: Mark the leftmost empty space. That space shows:
    - Its **color** (red or blue): which Buildings produce this game.
    - The **Bag number**: the Investment cost, also used by · on Agenda cards.
-   - The **Resource icon**: which Resource is taxed at the end of the game.
+   - The **Resource icon** (Army, Food or Materials): which Resource is taxed at the end of the game.
 3. **Ideology board** **[[p. 16](https://mrroboman.github.io/queens-dilemma-rules/?page=16)]**: Put each Slider in the middle of its track. Set Outcome markers and Hegemony tokens nearby.
 4. **Legacy components** **[[p. 17](https://mrroboman.github.io/queens-dilemma-rules/?page=17)]**: Have the Legacy tray, Utility sheet and Building sheet ready.
 5. **Player area** **[[p. 17](https://mrroboman.github.io/queens-dilemma-rules/?page=17)]**:
@@ -154,7 +154,7 @@ A game lasts about 7–9 rounds, each built around one Dilemma card. Each round 
     - you cannot pay its cost; or
     - a card rule forbids it.
 - **Bargaining** **[[p. 25](https://mrroboman.github.io/queens-dilemma-rules/?page=25)]**:
-  - Bargaining is allowed **only during the Voting Phase**. Resources (º, Ƒ, ∞, ª) may be given **for a service**: a vote, a pass, Branding rights, a tie-break, and so on.
+  - Players can freely bargain during the Voting Phase. The rulebook's example also shows a tie-break Deal being struck with the Moderator at Vote Resolution **[[p. 27](https://mrroboman.github.io/queens-dilemma-rules/?page=27)]**. Resources (º, Ƒ, ∞, ª) may be given **for a service**: a vote, a pass, Branding rights, a tie-break, and so on.
   - **Not allowed:**
     - Trading Resources for Resources
     - Trading ∆
@@ -266,7 +266,7 @@ Resolve active Events in ascending card-number order. Skip this phase if there a
 - The **next** game is the **Grand Finale**: open Mystery boxes **M07 and M08**, which decide the campaign winner.
 - **Final score inputs:** √ and ∑, plus your Infamy penalty tier.
   - √ is worth more if the Kingdom is **stable**; ∑ is worth more if it is **unstable**.
-  - Stability equals the number of **Scale** icons on the Ending stickers **[[p. 39](https://mrroboman.github.io/queens-dilemma-rules/?page=39), 47]**:
+  - The more **Scale** icons across the attached Ending stickers, the more stable the Kingdom **[[p. 39](https://mrroboman.github.io/queens-dilemma-rules/?page=39), 47]**:
     - 0 Scales: negative for stability.
     - 1 Scale: mixed.
     - 2 Scales: broadly positive.
@@ -286,7 +286,7 @@ Resolve active Events in ascending card-number order. Skip this phase if there a
     - Investments
     - Agendas
     - Pass Actions and Pass Bonuses
-    - Skill activations
+    - Some Skill activations
   - Taxes cannot be swapped for Infamy either **[[p. 35](https://mrroboman.github.io/queens-dilemma-rules/?page=35)]**.
 
 ## 8. Keywords and Effects [[p. 41](https://mrroboman.github.io/queens-dilemma-rules/?page=41)]
@@ -338,7 +338,8 @@ Resolve active Events in ascending card-number order. Skip this phase if there a
   - **The Chronicle card overrides the rulebook.**
 - **Agenda cards (¯A)** **[[p. 46](https://mrroboman.github.io/queens-dilemma-rules/?page=46)–47]**:
   - When you unlock one, read its back secretly. If the time-limit box is blank, **write the current game number + 3**.
-  - The goal is usually to spend Resources. "·" means the current Timeline Bag value.
+  - Goals are completed by spending the Resources shown. "·" means the current Timeline Bag value.
+  - Agendas are resolved only during the End of the Game (Agenda Resolution, [p. 35](https://mrroboman.github.io/queens-dilemma-rules/?page=35)).
   - The time limit is the last game in which you can complete the goal; after it, apply Failure.
   - **Crossroad:** A choice between two options, resolved immediately.
   - **Epilogue:** Its final reward is gained immediately. Mark a Fate space (Diary p. 3), then draw an Ongoing Agenda.
